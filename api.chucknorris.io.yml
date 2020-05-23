@@ -8,7 +8,7 @@ servers:
 info:
   description: This is a simple API
   version: "1.0.0"
-  title: Simple Inventory API
+  title: api.ChuckNorris.io definition
   contact:
     email: stephen.tunney@gmail.com
   license:
@@ -122,5 +122,3 @@ components:
         icon_url:
           type: string
           format: url
-        
-    

@@ -1,0 +1,180 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "api.ChuckNorris.io definition",
+    "description" : "This is a simple API",
+    "contact" : {
+      "email" : "stephen.tunney@gmail.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version" : "1.0.1"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/stunney/ChuckNorris/1.0.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  }, {
+    "url" : "https://api.chucknorris.io",
+    "description" : "Live Site"
+  } ],
+  "tags" : [ {
+    "name" : "admins",
+    "description" : "Secured Admin-only calls"
+  }, {
+    "name" : "developers",
+    "description" : "Operations available to regular developers"
+  } ],
+  "paths" : {
+    "/jokes/random" : {
+      "get" : {
+        "tags" : [ "developers" ],
+        "summary" : "searches inventory",
+        "description" : "By passing in the appropriate options, get a joke from the system\n",
+        "operationId" : "searchJokes",
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "query",
+          "description" : "pass an name to be replaced in the jokes",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "category",
+          "in" : "query",
+          "description" : "the category you desire to be the joke to be in the domain of",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/JokeItem"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          },
+          "404" : {
+            "description" : "may occur if a joke cannot be found"
+          }
+        }
+      }
+    },
+    "/jokes/search" : {
+      "get" : {
+        "tags" : [ "developers" ],
+        "summary" : "query for jokes",
+        "description" : "By passing in the appropriate options, you can search for\navailable jokes in the system by keywords\n",
+        "operationId" : "queryJokes",
+        "parameters" : [ {
+          "name" : "query",
+          "in" : "query",
+          "description" : "pass in a query to search for a joke with",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/JokeItem"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          },
+          "404" : {
+            "description" : "may occur if a joke cannot be found"
+          }
+        }
+      }
+    },
+    "/jokes/categories" : {
+      "get" : {
+        "tags" : [ "developers" ],
+        "summary" : "returns all valid categories",
+        "description" : "Returns all valid categories.\n",
+        "operationId" : "searchCategories",
+        "responses" : {
+          "200" : {
+            "description" : "categories were found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "JokeItem" : {
+        "required" : [ "id", "manufacturer", "name", "releaseDate" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+          },
+          "value" : {
+            "type" : "string",
+            "example" : "A really funny joke"
+          },
+          "url" : {
+            "type" : "string",
+            "format" : "url"
+          },
+          "icon_url" : {
+            "type" : "string",
+            "format" : "url"
+          }
+        },
+        "example" : {
+          "icon_url" : "http://example.com/aeiou",
+          "id" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+          "value" : "A really funny joke",
+          "url" : "http://example.com/aeiou"
+        }
+      }
+    }
+  }
+}
